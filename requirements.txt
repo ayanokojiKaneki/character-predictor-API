@@ -1,0 +1,6 @@
+fastapi 
+uvicorn 
+panda
+pydantic
+pydantic_settings
+pickle
