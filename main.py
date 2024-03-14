@@ -5,24 +5,14 @@ from fastapi.params import Body
 from pydantic import BaseModel
 import pickle 
 import pandas as pd
-from pydantic_settings import BaseSettings
 
 
-class Settings(BaseSettings):
-    
-    ORIGINS:str 
-    API:str
-
-    class Config:
-        env_file = ".env"
-
-settings = Settings()
 
 app = FastAPI(); 
 
 app.add_middleware(
    CORSMiddleware,
-   allow_origins=[settings.ORIGINS], 
+   allow_origins=["*"], 
    allow_credentials=True,
    allow_methods=["*"],
    allow_headers=["*"],
@@ -53,7 +43,9 @@ async def root():
        "authon":"Nikhil",
        }
 
-@app.post("/get-prediction")
+
+
+@app.post("/prediction/v1/character")
 async def get_predicted_character(new_data:Data, response:Response):
   try:
      new_data = pd.DataFrame([new_data.model_dump()]) 
